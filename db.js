@@ -50,11 +50,11 @@ app.post("/escucho", async(req,res)=>{
     try {
         let payloadOriginal = await jwt.verify(token, secretKey);
         let user_id = payloadOriginal.id;
-        let result = await client.query(
-    `SELECT cancion.nombre, escucha.reproducciones
-    FROM escucha
-    INNER JOIN cancion ON cancion.id = escucha.cancion_id
-    WHERE escucha.usuario_id = $1`, [user_id]);
+            let result = await client.query(
+    `SELECT c.nombre, e.reproducciones
+    FROM escucha e
+    INNER JOIN cancion c ON c.id = e.cancion_id
+    WHERE e.usuario_id = $1`, [user_id]);
         res.send(result.rows);
     }
     catch(error) {console.log("Error en el token: ", error.message); res.status(401).send(error.message)}
