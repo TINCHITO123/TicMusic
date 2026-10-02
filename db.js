@@ -10,9 +10,7 @@ const port = 3000;
 
 console.log(port)
 
-const { Client } = pkg;
-const client = new Client(config);
-await client.connect();
+const client = new pkg.Pool(config);
 
 app.use(express.json());
 
